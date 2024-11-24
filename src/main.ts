@@ -17,7 +17,7 @@ function render(route: string) {
             </div>
           </div>
           <div class="right">
-            <img src="../public/img/fingerprint.jpg" alt="Image">
+            <img src="/img/fingerprint.jpg" alt="Image">
           </div>
         </div>
       `;
@@ -34,7 +34,7 @@ function render(route: string) {
             </div>
           </div>
           <div class="right">
-            <img src="../public/img/fingerprint.jpg" alt="Image">
+            <img src="/img/fingerprint.jpg" alt="Image">
           </div>
         </div>
       `;
@@ -45,7 +45,7 @@ function render(route: string) {
           <div class="left">
             <div class="profile-container active">
               <div class="profile-pic">
-                <img src="../public/img/profile.png" alt="Profile Picture">
+                <img src="/img/profile.png" alt="Profile Picture">
               </div>
               <div class="profile-info">
                 <h3>Leo</h3>
@@ -55,7 +55,7 @@ function render(route: string) {
             </div>
           </div>
           <div class="right">
-            <img src="../public/img/fingerprint.jpg" alt="Image">
+            <img src="/img/fingerprint.jpg" alt="Image">
           </div>
         </div>
       `;
