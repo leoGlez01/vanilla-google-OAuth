@@ -3,6 +3,7 @@ import { setupRegister } from './register';
 
 const app = document.getElementById('app');
 
+// Renderiza las rutas
 function render(route: string) {
   if (app) {
     if (route.startsWith('profile')) {
@@ -42,6 +43,7 @@ function render(route: string) {
               <h2>Iniciar Sesión</h2>
               <p class="welcome-message">Bienvenido al servicio de identidad de Tecopos</p>
               <div id="login-form"></div>
+              <div id="google-signin-button"></div>
               <p><a href="#register">No tienes una cuenta? Registrate!</a></p>
             </div>
           </div>
@@ -50,6 +52,22 @@ function render(route: string) {
           </div>
         </div>
       `;
+
+      google.accounts.id.initialize({
+        client_id: '1023747230019-lfmvjecikhv4votd5l2r750np5t6j89j.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-signin-button')!,
+        {
+          theme: 'filled_black',
+          size: 'large',
+          text: 'continue_with',
+          shape: 'pill'
+        }
+      );
+      google.accounts.id.prompt();
+
       setupLogin(document.getElementById('login-form') as HTMLElement);
     } else if (route === 'register') {
       app.innerHTML = `
@@ -70,6 +88,19 @@ function render(route: string) {
       setupRegister(document.getElementById('register-form') as HTMLElement);
     }
   }
+}
+
+// Maneja la respuesta de Google
+function handleCredentialResponse(response: any) {
+  const token = response.credential;
+  console.log('Token de Google:', token);
+
+  // Opcional: decodifica el token para obtener info del usuario
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const { name, email } = payload;
+
+  // Redirige a la página de perfil
+  window.location.hash = `profile?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
 }
 
 window.addEventListener('hashchange', () => {
