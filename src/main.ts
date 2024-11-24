@@ -5,7 +5,36 @@ const app = document.getElementById('app');
 
 function render(route: string) {
   if (app) {
-    if (route === 'login') {
+    if (route.startsWith('profile')) {
+      const params = new URLSearchParams(route.split('?')[1]);
+      const name = params.get('name');
+      const email = params.get('email');
+
+      app.innerHTML = `
+        <div class="container">
+          <div class="left">
+            <div class="profile-container active">
+              <div class="profile-pic">
+                <img src="/img/profile.png" alt="Profile Picture">
+              </div>
+              <div class="profile-info">
+                <h3>${name}</h3>
+                <p>${email}</p>
+              </div>
+              <button class="logout-button" id="logout-button">Cerrar Sesión</button>
+            </div>
+          </div>
+          <div class="right">
+            <img src="/img/fingerprint.jpg" alt="Image">
+          </div>
+        </div>
+      `;
+
+      const logoutButton = document.getElementById('logout-button');
+      logoutButton?.addEventListener('click', () => {
+        window.location.hash = '#login';
+      });
+    } else if (route === 'login') {
       app.innerHTML = `
         <div class="container">
           <div class="left">
@@ -39,31 +68,6 @@ function render(route: string) {
         </div>
       `;
       setupRegister(document.getElementById('register-form') as HTMLElement);
-    } else if (route === 'profile') {
-      app.innerHTML = `
-        <div class="container">
-          <div class="left">
-            <div class="profile-container active">
-              <div class="profile-pic">
-                <img src="/img/profile.png" alt="Profile Picture">
-              </div>
-              <div class="profile-info">
-                <h3>Leo</h3>
-                <p>leo@gmail.com</p>
-              </div>
-              <button class="logout-button" id="logout-button">Cerrar Sesión</button>
-            </div>
-          </div>
-          <div class="right">
-            <img src="/img/fingerprint.jpg" alt="Image">
-          </div>
-        </div>
-      `;
-
-      const logoutButton = document.getElementById('logout-button');
-      logoutButton?.addEventListener('click', () => {
-        window.location.hash = '#login';
-      });
     }
   }
 }
